@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Smart weather forcasting app✨</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet" />
+<link  href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600&display=swap" rel="stylesheet" />
+<style>
+* {
+-webkit-tap-highlight-color:transparent;
+tap-highlight-color:transparent;
+-webkit-box-sizing:border-box;
+-webkit-user-select:none;
+scroll-behavior:smooth;
+box-sizing:border-box;
+user-select:none;
+}
+
+body {
+margin:0;
+padding:0;
+}
+
+#wrapper {
+display:inline-block;
+background:#22222e;
+position:absolute;
+overflow-x:hidden;
+overflow-y:scroll;
+text-align:center;
+height:100vh;
+width:100vw;
+left:0;
+top:0;
+}
+
+#part_1 {
+position:relative ;
+height:60%;
+width:320px;
+background:hsla(240, 15%, 31%, 1);
+margin-left:auto;
+margin-right:auto;
+top:8vw;
+border-radius:30px;
+min-height:420px;
+}
+
+#part_2 {
+position:relative ;
+height:20%;
+background:hsla(240, 15%, 31%, 1);
+width:320px;
+margin-left:auto;
+margin-right:auto;
+top:15vw;
+border-radius:30px;
+display:flex;
+}
+
+#search_bar {
+position:relative;
+top:15px;
+left:-5px;
+height:32px;
+outline:none;
+border:none;
+border-radius:77px;
+width:190px;
+color:#191923;
+background:#8f8fac;
+font-size:14px;
+text-indent:20px;
+font-weight:600;
+font-family: 'Nunito', sans-serif;
+}
+
+#search_btn {
+position:relative;
+top:15px;
+left:3px;
+height:32px;
+outline:none;
+border:none;
+border-radius:77px;
+width:80px;
+color:#191923;
+background:#8f8fac;
+font-size:12px;
+font-weight:600;
+font-family: 'Nunito', sans-serif;
+}
+
+#image_section {
+position:relative;
+width:70%;
+height:230px;
+background:;
+top:35px;
+margin-left:auto;
+margin-right:auto;
+}
+
+#detail_section {
+position:relative;
+width:100%;
+height:133px;
+background:;
+top:30px;
+margin-left:auto;
+margin-right:auto;
+text-align:center;
+}
+
+#weather_icon {
+width:100%;
+height:100%;
+}
+
+#location {
+position:relative;
+color:#d2d2de;
+font-weight:600;
+font-size:20px;
+font-family: 'Montserrat', sans-serif;
+top:35px;
+}
+
+#temperature {
+position:relative;
+color:#d2d2de;
+font-weight:600;
+font-size:15px;
+top:45px;
+font-family: 'Nunito', sans-serif;
+}
+
+#descreption {
+position:relative;
+color:#d2d2de;
+font-weight:600;
+font-size:15px;
+top:48px;
+font-family: 'Nunito', sans-serif;
+}
+
+.sec {
+position:relative;
+width:50%;
+height:100%;
+background-color:powderbue;
+}
+
+#wind_speed_icon {
+width:45%;
+height:60%;
+}
+
+#humidity_icon {
+position:relative;
+width:35%;
+height:40%;
+top:18px;
+}
+
+
+#wind_speed {
+position:relative;
+color:#d2d2de;
+font-weight:600;
+font-size:16px;
+font-family: 'Nunito', sans-serif;
+}
+
+#humidity {
+position:relative;
+color:#d2d2de;
+font-weight:600;
+font-size:16px;
+top:27px;
+font-family: 'Nunito', sans-serif;
+}
+
+</style>
+</head>
+<body>
+<div id="wrapper">
+<div id="part_1">
+<input type="search" value="tokyo" id="search_bar" />
+<input type="button" value="Search" id="search_btn" onclick="Fetch_weather()" />
+<br />
+<div id="image_section">
+<img src="" alt="" id="weather_icon" />
+</div>
+<div id="detail_section">
+<div id="location"><span id="city_name">Loading... </span>  <span id="country_name">Loading...</span></div>
+<div id="temperature">Loading...</div>
+<div id="descreption">Loading...</div>
+</div>
+</div>
+<div id="part_2">
+<div class="sec">
+<img src="https://i.ibb.co/RTcWxGw/wind-1.png" alt="" id="wind_speed_icon" /><br />
+<div id="wind_speed">Loading...</div>
+</div>
+<div class="sec">
+<img src="https://i.ibb.co/W0k7X6G/humidity.png" alt="" id="humidity_icon" /><br />
+<div id="humidity">Loading...</div>
+</div>
+</div>
+</div>
+<script>
+const Fetch_weather = async() => {
+let api_key = "4b795612d32ec836d583d2df6c2575eb";
+let city_name = document.querySelector("#search_bar").value;
+try {
+let response = await fetch("https://api.openweathermap.org/data/2.5/weather?q="+`${city_name}`+"&appid="+`${api_key}`+"&units=metric");
+let data = await response.json();
+Display_data(data);
+}catch(error) {
+alert(`Enter valid city name`);
+let icon = document.querySelector("#weather_icon");
+let isec = document.querySelector("#image_section");
+icon.src="https://ouch-cdn2.icons8.com/qw-NxN0pm483xRLP6o2vPHf4eBRR9ghBvNTWJm7AHiw/rs:fit:784:784/czM6Ly9pY29uczgu/b3VjaC1wcm9kLmFz/c2V0cy9wbmcvMTQ3/LzAzOTY5ZTAyLTNl/MjEtNDAzMS1iM2M2/LWFhMmIzZjlmMzIy/OS5wbmc.png";
+isec.style.width="100%"
+isec.style.height="330px";
+document.querySelector("#part_2").style.backgroundImage="url('https://ouch-cdn2.icons8.com/8GfbPRTD8BejDSgUdPcc_updVM7hPUSC-FvfUjLBnt0/rs:fit:784:328/czM6Ly9pY29uczgu/b3VjaC1wcm9kLmFz/c2V0cy9zdmcvOTEx/LzdlYzYzYzk5LTVi/ODYtNDE1ZS04Mjgz/LTA0ZjljOWFjNDI2/MS5zdmc.png')";
+document.querySelector("#part_2").style.backgroundSize="cover";
+document.querySelector("#city_name").innerHTML="";
+document.querySelector("#country_name").innerHTML="";
+document.querySelector("#temperature").innerHTML="";
+document.querySelector("#descreption").innerHTML="";
+document.querySelector("#wind_speed").innerHTML="";
+document.querySelector("#humidity").innerHTML="";
+document.querySelector("#wind_speed_icon").style.display="none";
+document.querySelector("#humidity_icon").style.display="none";
+}
+}
+const Display_data = data => {
+let town = document.querySelector("#city_name");
+let ctry = document.querySelector("#country_name");
+let temp = document.querySelector("#temperature");
+let desc = document.querySelector("#descreption");
+let wdsp = document.querySelector("#wind_speed");
+let hmdt = document.querySelector("#humidity");
+let icon = document.querySelector("#weather_icon");
+let isec = document.querySelector("#image_section");
+isec.style.width="60%"
+isec.style.height="230px";
+town.textContent = data.name;
+ctry.textContent = data.sys.country;
+temp.textContent = data.main.temp+`°C`;
+desc.textContent = data.weather[0].main;
+hmdt.textContent = data.main.humidity+`%`;
+wdsp.textContent = data.wind.speed+` km/h`;
+document.querySelector("#part_2").style.backgroundImage="url('')";
+document.querySelector("#wind_speed_icon").style.display="inline";
+document.querySelector("#humidity_icon").style.display="inline";
+document.querySelector("#wind_speed_icon").src="https://i.ibb.co/RTcWxGw/wind-1.png";
+document.querySelector("#humidity_icon").src="https://i.ibb.co/W0k7X6G/humidity.png";
+if (desc.innerHTML=="Thunderstorm") {
+icon.src="https://i.ibb.co/Kmd4KSX/thunderstorm.png";}
+else if (desc.innerHTML=="Drizzle") {
+icon.src="https://i.ibb.co/dPj09pT/drizzle.png";}
+else if (desc.innerHTML=="Rain") {
+icon.src="https://i.ibb.co/mF1KR0Y/rain.png";}
+else if (desc.innerHTML=="Snow") {
+icon.src="https://i.ibb.co/3z0R4Wb/snow.png";}
+else if (desc.innerHTML=="Mist") {
+icon.src="https://i.ibb.co/f2BdsbV/mist.png";}
+else if (desc.innerHTML=="Smoke") {
+icon.src="https://i.ibb.co/nz5XJXw/smoke.png";}
+else if (desc.innerHTML=="Haze") {
+icon.src="https://i.ibb.co/dpNpp5r/fog.png";}
+else if (desc.innerHTML=="Dust") {
+icon.src="https://i.ibb.co/BPQ7n7H/dust-storm.png";}
+else if (desc.innerHTML=="Fog") {
+icon.src="https://i.ibb.co/7b5PVbz/foggy.png";}
+else if (desc.innerHTML=="Sand") {
+icon.src="https://i.ibb.co/G0T4DbJ/sandstorm.png";}
+else if (desc.innerHTML=="Ash") {
+icon.src="https://i.ibb.co/b3mv2pK/dust.png";}
+else if (desc.innerHTML=="Squall") {
+icon.src="https://i.ibb.co/k8h6yYk/windstorm.png";}
+else if (desc.innerHTML=="Tornado") {
+icon.src="https://i.ibb.co/QMntwpD/hurricane.png";}
+else if (desc.innerHTML=="Clear") {
+icon.src="https://i.ibb.co/WgN27Yv/clear-sky.png";}
+else if (desc.innerHTML=="Clouds") {
+icon.src="https://i.ibb.co/rxy1z8V/clouds.png";}
+}
+window.onload = Fetch_weather();
+</script>
+</body>
+</html>
